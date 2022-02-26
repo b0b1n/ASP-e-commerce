@@ -1,0 +1,24 @@
+﻿@model MonPCapplication.PRODUIT
+
+<div class="col-12 m-3">
+    <div class="row bg-light p-3">
+        <div class="col-6">
+            <img src="~/Images/@Model.image" alt="Denim Jeans" style=" height: 250px; object-fit: contain; ">
+        </div>
+        <div class="col-6">
+            <h3><b>@Model.nomProduit</b></h3>
+            <p style=" font-size: 18px;">@Model.Description</p>
+            <p style=" color: darkblue; font-size: 18px;"><b>@Model.prix </b>Dh</p>
+            <p><button onclick="location.href = '@Url.Action("FaireLaCommande","Panier")?id=@Model.id'" class="btn-primary .bg-secondary.bg-gradient p-2 bg-info rounded-3 w-25"> Add to Cart</button></p>
+            <a href="@Url.Action("Index","Produit")?id=@Model.id" class="col-2">Plus de détails</a>
+        </div>
+    </div>
+</div>
+<div class="form-group mt-3" align="center">
+    <div class="col-md-offset-2 col-md-12 w-100 m-2">
+        <input type="submit" value="Voir le catalogue" class="btn btn-default bg-success bg-gradient  text-white fw-bold ps-5 pe-5" onclick=" location.href = '@Url.Action("Index","Catalog")'" />
+    </div>
+    <div class="col-md-offset-2 col-md-12 w-100 m-2">
+        <input type="submit" value="Revenir à page d'accueil" class="btn btn-default bg-success bg-gradient  text-white fw-bold ps-5 pe-5" onclick=" location.href = '@Url.Action("Index","Home")'" />
+    </div>
+</div>

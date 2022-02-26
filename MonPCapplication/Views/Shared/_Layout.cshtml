@@ -1,0 +1,84 @@
+﻿@using MonPCapplication.Models
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link href="~/Styles/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" />
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+    <link href="~/Styles/css/style1.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-text mt-3 rounded-2 border border-secondary" style="background-color: #e3f2fd;">
+            <div class="container-fluid">
+                <a class="navbar-brand ms-2" href='@Url.Action("Index","Home")'><b>MonPC </b>store</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarScroll">
+                    <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                        <li class="nav-item">
+                            <a class="nav-link  ms-5" aria-current="page" href='@Url.Action("Index","Home")'>Accueil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link ms-3" aria-current="page" href='@Url.Action("Index","Catalog")'>Catalogue</a>
+                        </li>
+                        @if (AccountLogin.est_admin == 1)
+                        {
+                            <li class="nav-item">
+                            <a class="nav-link ms-3" aria-current="page" href='@Url.Action("Index","Admin")'>Gestion des produits</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link ms-3" aria-current="page" href='@Url.Action("AjoutProd","Admin")'>Ajouter produit</a>
+                            </li>
+                        }
+                        <li class="nav-item">
+                            <a class="nav-link ms-3" aria-current="page" href='@Url.Action("About","Home")'>à propos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link  ms-3" aria-current="page" href='@Url.Action("ContactUs","Home")'>Contact</a>
+                        </li>
+                    </ul>
+                    <form class="d-flex" action='@Url.Action("Index","Search")' method="post">
+                        <button class="btn btn-outline-success" type="submit">Rechercher produits</button>
+                    </form>
+                    @if (AccountLogin.est_connecté == 0)
+                    {
+
+                        <a class="p-2 pt-1 mt-1 nav-link ms-3 fw-bolder" href='@Url.Action("Login","Account")'> Login <img src="~/Images/avatar.png" style=" height: 25px; object-fit: contain;" /></a>
+                    }
+                    else
+                    {
+                        <a class="p-2 pt-1 mt-1 nav-link ms-3 fw-bolder" href='@Url.Action("Login","Account")' onclick="@AccountLogin.est_connecté=0; @AccountLogin.est_admin =0;"> Logout <img src="~/Images/avatar.png" style=" height: 25px; object-fit: contain; " /></a>
+                        <button type="button" class=" bg-transparent p-2" style="border-radius: 50%; border: none; " onclick="location.href= '@Url.Action("Index","Panier")'">
+                            <b><a class="fa fa-shopping-basket"></a></b>
+                        </button>
+                    }
+
+                </div>
+            </div>
+        </nav>
+        <div class="container body-content ">
+            @RenderBody()
+            <hr />
+
+            <footer class="text-center">
+                <p>&copy; @DateTime.Now.Year - Crée par : Sohaib Skious</p>
+            </footer>
+        </div>
+    </div>
+    <script src="cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+</body>
+</html>

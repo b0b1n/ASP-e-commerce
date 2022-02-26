@@ -1,0 +1,76 @@
+﻿@model MonPCapplication.Models.Mes_Produits.MyProduct
+
+
+<!-- start single product item
+@foreach (var item in Model.dict)
+{
+    <div class="categories">
+        <center>
+            <span class="category">
+                <td>@item.Key</td>
+            </span>
+        </center>
+        <div class="my_products">
+            @foreach (var prod in item.Value)
+            {
+            <div class="mon_produit">
+                <img src="~/Images/@prod.image" style="width : 250px; height : auto;" />
+                <h5 style="font-family:'Century Gothic'">@prod.nomProduit</h5>
+                <div>
+                    <b>@prod.prix</b> Dh
+                </div>
+                <input type="button" onclick="location.href = '@Url.Action("Index","Produit")/?id=@prod.id'"  class= "bouton" value="détails">
+            </div>
+            }
+        </div>
+    </div>
+}
+
+-->
+
+<div class="row m-3 p-2 rounded-3" style="background-image: linear-gradient(to right, lightblue, whitesmoke); ">
+    <div align="center" class="pt-4 col-4">
+        <p class="fw-bolder fs-2" >Bienvenue dans notre site e-commerce "MonPC"</p>
+        <p class="fw-bold mt-3 fs-5 text-white">
+            Les meilleurs produits,
+            La meilleur qualité,
+            Les meilleurs prix
+        </p>
+    </div>
+    <div class="col-8">
+        <img src="~/Images/banner.jpg" class="w-100 " />
+    </div>
+</div>
+@foreach (var item in Model.dict)
+{
+    <div class="m-5 mt-1 mb-1 border border-1 ps-5 pe-5 pt-1 pb-2 bg-white rounded-3 align-middle" >
+        <div class="d-flex align-items-center justify-content-sm-between ">
+            <div class="text-black fs-3 fw-bold mb-3 " >@item.Key</div>
+            <a class="text-info fs-6 fw-bold mb-3 text-decoration-none" href='@Url.Action("Index","Catalog")'>Voir plus </a>
+        </div>
+        <div class="row">
+            @foreach (var prod in item.Value)
+            {
+
+
+                <div class="col-3 rounded-3 border border-1 p-3 ms-3 me-3 bg-light "  >
+                    <img src="~/Images/@prod.image" alt="Denim Jeans" class="w-100 " align="middle">
+                    <div class="mt-1">
+                        <h5 class="mt-3 mb-1 fw-bolder" align="center"><b>@prod.nomProduit</b></h5>
+                        <div class="d-flex align-items-center justify-content-sm-between">
+                            <p  align="center">@prod.prix Dh</p>
+                            <p align="center"><b>Qte : </b>@prod.quantité</p>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-sm-between">
+                            <button onclick="location.href = '@Url.Action("FaireLaCommande","Panier")?id=@prod.id'" align="center" class="btn btn-outline-primary pt-0 pb-0 fs-6"> Add to Cart</button>
+                            <a href="@Url.Action("Index","Produit")?id=@prod.id" align="center" class="text-decoration-none">Plus de détails</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}
+
+
+

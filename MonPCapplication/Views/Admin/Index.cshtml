@@ -1,0 +1,45 @@
+﻿
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+
+<h2 align="center">Page de gestion des produits</h2>
+<table id="myTable" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>Nom du Produit</th>
+            <th>Prix</th>
+            <th>Quantité</th>
+            <th>Catégorie</th>
+            <th>Fournisseur</th>
+            <th>Modifier/Supprimer</th>
+        </tr>
+    </thead>
+</table>
+
+<script>
+    $(document).ready(function () {
+        $('#myTable').DataTable({
+            "ajax": {
+                "url": "/Admin/GetProducts",
+                "type": "GET",
+                "datatype": "json"
+            },
+            "columns": [
+                { "data": "nomProduit" },
+                { "data": "prix" },
+                { "data": "quantité" },
+                { "data": "appartient_a" },
+                { "data": "ajoute_par" },
+                {"data": "id", "render": function (data) {
+                    return "<a class='btn btn-danger btn-sm' style='margin-left:5px' href='@Url.Action("supprimerProd", "Admin")?id="
+                        + data + "'><i class='fa fa-trash'></i> Delete</a>";
+                    },
+                        "orderable": false,
+                        "searchable":false,
+                        "width":"150px"
+                    }
+            ]
+        });
+    });
+</script>
+

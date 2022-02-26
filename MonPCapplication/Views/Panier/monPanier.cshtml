@@ -1,0 +1,60 @@
+﻿@using MonPCapplication.Models.Mes_Produits
+@using MonPCapplication.Controllers
+
+
+
+
+@if (Session["panier"] != null)
+{
+    <table class="table table-striped mt-3" align="center">
+        <thead class="bg-light">
+            <tr>
+                <th>Supprimer du liste</th>
+                <th>Image</th>
+                <th>nom Produit</th>
+                <th>prix</th>
+                <th>quantité</th>
+                <th>prix*Qte</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{double somme = 0; }
+
+            @foreach (Achat elem in (List<Achat>)Session["panier"])
+            {
+                { somme = somme + (double)elem.Quantite * (double)elem.Product.prix; }
+                <tr>
+                    <td class="p-3 fw-bold fs-5" align="center">@Html.ActionLink("Supprimer", "supprimer", "Panier", new { id = elem.Product.id }, null)</td>
+                    <td><img src="~/Images/@elem.Product.image" style="width:200px;" /> </td>
+                    <td class="p-3 fw-bold fs-6 " align="center">@elem.Product.nomProduit</td>
+                    <td class="p-3 fw-bold fs-6" align="center">@elem.Product.prix Dh</td>
+                    <td class="p-3 fw-bold fs-6" align="center">@elem.Quantite</td>
+                    <td class="p-3 fw-bold fs-6" align="center">@(elem.Quantite * elem.Product.prix) Dh</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <p align="center" class="fs-5">Votre montant à payer est: <b> @somme </b>Dh</p>
+
+    <div class="form-group mt-3" align="center">
+        <div class="col-md-offset-2 col-md-12 w-100">
+            <input type="submit" value="Procéder avec l'achat" class="btn btn-default bg-success bg-gradient  text-white fw-bold ps-5 pe-5" onclick=" location.href = '@Url.Action("Acheter","Panier")'" />
+        </div>
+    </div>
+
+}
+else
+{
+
+    <p align="center" class="fs-5 mt-5">Votre panier d'achat est vide pour le moment </p>
+}
+
+
+
+
+<div class="form-group mt-3" align="center">
+    <div class="col-md-offset-2 col-md-12 w-100">
+        <input type="submit" value=" Continuer l'achat " class="btn btn-default bg-info text-white fw-bold ps-5 pe-5" onclick=" location.href = '@Url.Action("Index","Home")'" />
+    </div>
+</div>

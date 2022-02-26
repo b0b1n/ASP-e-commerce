@@ -1,0 +1,29 @@
+﻿@model MonPCapplication.Models.Mes_Produits.CategorieViewModel
+
+<br />
+<h3 align="center" style="font-family : 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">
+    Liste des catégories de produits existants
+</h3>
+<br />
+<div>
+    @Html.DropDownList("nomCategorie", Model.ListCatalog,
+    new { @class = "form-select w-50 d-block mx-auto" , @onchange = "onDDchange(this.value)" })
+</div>
+
+
+<div id="MyContent">
+
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    function onDDchange(val) {
+        var url = '@Url.Action("getPartialProducts", "Catalog")?CategId='+val;
+
+        console.log("value = " + val);
+        console.log(url);
+        $('#MyContent').load(url);
+    }
+
+
+</script>

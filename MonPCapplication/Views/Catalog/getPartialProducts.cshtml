@@ -1,0 +1,28 @@
+﻿@model MonPCapplication.Models.Mes_Produits.PartialProductViewModel
+
+
+<div>
+    <div class="row m-4 d-block mx-auto">
+        @foreach (var elem in Model.ListProduct)
+        {
+            <div class="col-12 m-3">
+                <div class="row bg-light p-3">
+                    <div class="col-6">
+                        <img src="~/Images/@elem.image" alt="Denim Jeans" style=" height: 250px; object-fit: contain; ">
+                    </div>
+                    <div class="col-6">
+                        <h3><b>@elem.nomProduit</b></h3>
+                        <p style=" font-size: 18px;">@elem.Description</p>
+                        <p style=" color: darkblue; font-size: 18px;"><b>@elem.prix </b>Dh</p>
+                        <p><button onclick="location.href = '@Url.Action("FaireLaCommande","Panier")?id=@elem.id'" class="btn-primary .bg-secondary.bg-gradient p-2 bg-info rounded-3 w-25"> Add to Cart</button></p>
+                        <a href="@Url.Action("Index","Produit")?id=@elem.id" class="col-2">Plus de détails</a>
+                    </div>
+
+                </div>
+            </div>
+
+        }
+
+
+    </div>
+</div>

@@ -1,0 +1,384 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MonPCModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ADMINISTRATEUR">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="password" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CATEGORIE">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nomCategorie" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="CLIENT">
+          <Key>
+            <PropertyRef Name="idClient" />
+          </Key>
+          <Property Name="idClient" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="nom" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="prenom" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="mail" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="adresse" Type="nvarchar(max)" />
+          <Property Name="telephone" Type="nvarchar" MaxLength="50" />
+          <Property Name="Budget" Type="real" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CLIENT_PRODUIT">
+          <Key>
+            <PropertyRef Name="idCLIENT" />
+            <PropertyRef Name="idPRODUIT" />
+          </Key>
+          <Property Name="idCLIENT" Type="int" Nullable="false" />
+          <Property Name="idPRODUIT" Type="int" Nullable="false" />
+          <Property Name="quantité" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FOURNISSEUR">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="nom" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="prenom" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="mail" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="PRODUIT">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nomProduit" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="image" Type="nvarchar" MaxLength="50" />
+          <Property Name="prix" Type="numeric" Precision="16" Scale="2" />
+          <Property Name="quantité" Type="int" />
+          <Property Name="ajoute_par" Type="int" Nullable="false" />
+          <Property Name="appartient_a" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_CLIENT_PRODUIT_CLIENT">
+          <End Role="CLIENT" Type="Self.CLIENT" Multiplicity="1" />
+          <End Role="CLIENT_PRODUIT" Type="Self.CLIENT_PRODUIT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENT">
+              <PropertyRef Name="idClient" />
+            </Principal>
+            <Dependent Role="CLIENT_PRODUIT">
+              <PropertyRef Name="idCLIENT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CLIENT_PRODUIT_PRODUIT">
+          <End Role="PRODUIT" Type="Self.PRODUIT" Multiplicity="1" />
+          <End Role="CLIENT_PRODUIT" Type="Self.CLIENT_PRODUIT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUIT">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CLIENT_PRODUIT">
+              <PropertyRef Name="idPRODUIT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUIT_CATEGORIE">
+          <End Role="CATEGORIE" Type="Self.CATEGORIE" Multiplicity="1" />
+          <End Role="PRODUIT" Type="Self.PRODUIT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CATEGORIE">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PRODUIT">
+              <PropertyRef Name="appartient_a" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUIT_FOURNISSEUR">
+          <End Role="FOURNISSEUR" Type="Self.FOURNISSEUR" Multiplicity="1" />
+          <End Role="PRODUIT" Type="Self.PRODUIT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FOURNISSEUR">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PRODUIT">
+              <PropertyRef Name="ajoute_par" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MonPCModelStoreContainer">
+          <EntitySet Name="ADMINISTRATEUR" EntityType="Self.ADMINISTRATEUR" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CATEGORIE" EntityType="Self.CATEGORIE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CLIENT" EntityType="Self.CLIENT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CLIENT_PRODUIT" EntityType="Self.CLIENT_PRODUIT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FOURNISSEUR" EntityType="Self.FOURNISSEUR" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PRODUIT" EntityType="Self.PRODUIT" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CLIENT_PRODUIT_CLIENT" Association="Self.FK_CLIENT_PRODUIT_CLIENT">
+            <End Role="CLIENT" EntitySet="CLIENT" />
+            <End Role="CLIENT_PRODUIT" EntitySet="CLIENT_PRODUIT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CLIENT_PRODUIT_PRODUIT" Association="Self.FK_CLIENT_PRODUIT_PRODUIT">
+            <End Role="PRODUIT" EntitySet="PRODUIT" />
+            <End Role="CLIENT_PRODUIT" EntitySet="CLIENT_PRODUIT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUIT_CATEGORIE" Association="Self.FK_PRODUIT_CATEGORIE">
+            <End Role="CATEGORIE" EntitySet="CATEGORIE" />
+            <End Role="PRODUIT" EntitySet="PRODUIT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUIT_FOURNISSEUR" Association="Self.FK_PRODUIT_FOURNISSEUR">
+            <End Role="FOURNISSEUR" EntitySet="FOURNISSEUR" />
+            <End Role="PRODUIT" EntitySet="PRODUIT" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MonPCModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CATEGORIE">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nomCategorie" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PRODUITs" Relationship="Self.FK_PRODUIT_CATEGORIE" FromRole="CATEGORIE" ToRole="PRODUIT" />
+        </EntityType>
+        <EntityType Name="CLIENT">
+          <Key>
+            <PropertyRef Name="idClient" />
+          </Key>
+          <Property Name="idClient" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="nom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="prenom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="mail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="adresse" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="telephone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Budget" Type="Single" Nullable="false" />
+          <NavigationProperty Name="CLIENT_PRODUIT" Relationship="Self.FK_CLIENT_PRODUIT_CLIENT" FromRole="CLIENT" ToRole="CLIENT_PRODUIT" />
+        </EntityType>
+        <EntityType Name="CLIENT_PRODUIT">
+          <Key>
+            <PropertyRef Name="idCLIENT" />
+            <PropertyRef Name="idPRODUIT" />
+          </Key>
+          <Property Name="idCLIENT" Type="Int32" Nullable="false" />
+          <Property Name="idPRODUIT" Type="Int32" Nullable="false" />
+          <Property Name="quantité" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CLIENT" Relationship="Self.FK_CLIENT_PRODUIT_CLIENT" FromRole="CLIENT_PRODUIT" ToRole="CLIENT" />
+          <NavigationProperty Name="PRODUIT" Relationship="Self.FK_CLIENT_PRODUIT_PRODUIT" FromRole="CLIENT_PRODUIT" ToRole="PRODUIT" />
+        </EntityType>
+        <EntityType Name="FOURNISSEUR">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="nom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="prenom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="mail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PRODUITs" Relationship="Self.FK_PRODUIT_FOURNISSEUR" FromRole="FOURNISSEUR" ToRole="PRODUIT" />
+        </EntityType>
+        <EntityType Name="PRODUIT">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nomProduit" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="image" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="prix" Type="Decimal" Precision="16" Scale="2" />
+          <Property Name="quantité" Type="Int32" />
+          <Property Name="ajoute_par" Type="Int32" Nullable="false" />
+          <Property Name="appartient_a" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CATEGORIE" Relationship="Self.FK_PRODUIT_CATEGORIE" FromRole="PRODUIT" ToRole="CATEGORIE" />
+          <NavigationProperty Name="CLIENT_PRODUIT" Relationship="Self.FK_CLIENT_PRODUIT_PRODUIT" FromRole="PRODUIT" ToRole="CLIENT_PRODUIT" />
+          <NavigationProperty Name="FOURNISSEUR" Relationship="Self.FK_PRODUIT_FOURNISSEUR" FromRole="PRODUIT" ToRole="FOURNISSEUR" />
+        </EntityType>
+        <Association Name="FK_PRODUIT_CATEGORIE">
+          <End Role="CATEGORIE" Type="Self.CATEGORIE" Multiplicity="1" />
+          <End Role="PRODUIT" Type="Self.PRODUIT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CATEGORIE">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PRODUIT">
+              <PropertyRef Name="appartient_a" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CLIENT_PRODUIT_CLIENT">
+          <End Role="CLIENT" Type="Self.CLIENT" Multiplicity="1" />
+          <End Role="CLIENT_PRODUIT" Type="Self.CLIENT_PRODUIT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENT">
+              <PropertyRef Name="idClient" />
+            </Principal>
+            <Dependent Role="CLIENT_PRODUIT">
+              <PropertyRef Name="idCLIENT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CLIENT_PRODUIT_PRODUIT">
+          <End Role="PRODUIT" Type="Self.PRODUIT" Multiplicity="1" />
+          <End Role="CLIENT_PRODUIT" Type="Self.CLIENT_PRODUIT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUIT">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CLIENT_PRODUIT">
+              <PropertyRef Name="idPRODUIT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUIT_FOURNISSEUR">
+          <End Role="FOURNISSEUR" Type="Self.FOURNISSEUR" Multiplicity="1" />
+          <End Role="PRODUIT" Type="Self.PRODUIT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FOURNISSEUR">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PRODUIT">
+              <PropertyRef Name="ajoute_par" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MonPCEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CATEGORIEs" EntityType="Self.CATEGORIE" />
+          <EntitySet Name="CLIENTs" EntityType="Self.CLIENT" />
+          <EntitySet Name="CLIENT_PRODUIT" EntityType="Self.CLIENT_PRODUIT" />
+          <EntitySet Name="FOURNISSEURs" EntityType="Self.FOURNISSEUR" />
+          <EntitySet Name="PRODUITs" EntityType="Self.PRODUIT" />
+          <AssociationSet Name="FK_PRODUIT_CATEGORIE" Association="Self.FK_PRODUIT_CATEGORIE">
+            <End Role="CATEGORIE" EntitySet="CATEGORIEs" />
+            <End Role="PRODUIT" EntitySet="PRODUITs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CLIENT_PRODUIT_CLIENT" Association="Self.FK_CLIENT_PRODUIT_CLIENT">
+            <End Role="CLIENT" EntitySet="CLIENTs" />
+            <End Role="CLIENT_PRODUIT" EntitySet="CLIENT_PRODUIT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CLIENT_PRODUIT_PRODUIT" Association="Self.FK_CLIENT_PRODUIT_PRODUIT">
+            <End Role="PRODUIT" EntitySet="PRODUITs" />
+            <End Role="CLIENT_PRODUIT" EntitySet="CLIENT_PRODUIT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUIT_FOURNISSEUR" Association="Self.FK_PRODUIT_FOURNISSEUR">
+            <End Role="FOURNISSEUR" EntitySet="FOURNISSEURs" />
+            <End Role="PRODUIT" EntitySet="PRODUITs" />
+          </AssociationSet>
+          <EntitySet Name="ADMINISTRATEURs" EntityType="MonPCModel.ADMINISTRATEUR" />
+        </EntityContainer>
+        <EntityType Name="ADMINISTRATEUR">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MonPCModelStoreContainer" CdmEntityContainer="MonPCEntities">
+          <EntitySetMapping Name="CATEGORIEs">
+            <EntityTypeMapping TypeName="MonPCModel.CATEGORIE">
+              <MappingFragment StoreEntitySet="CATEGORIE">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nomCategorie" ColumnName="nomCategorie" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CLIENTs">
+            <EntityTypeMapping TypeName="MonPCModel.CLIENT">
+              <MappingFragment StoreEntitySet="CLIENT">
+                <ScalarProperty Name="idClient" ColumnName="idClient" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="prenom" ColumnName="prenom" />
+                <ScalarProperty Name="mail" ColumnName="mail" />
+                <ScalarProperty Name="adresse" ColumnName="adresse" />
+                <ScalarProperty Name="telephone" ColumnName="telephone" />
+                <ScalarProperty Name="Budget" ColumnName="Budget" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CLIENT_PRODUIT">
+            <EntityTypeMapping TypeName="MonPCModel.CLIENT_PRODUIT">
+              <MappingFragment StoreEntitySet="CLIENT_PRODUIT">
+                <ScalarProperty Name="idCLIENT" ColumnName="idCLIENT" />
+                <ScalarProperty Name="idPRODUIT" ColumnName="idPRODUIT" />
+                <ScalarProperty Name="quantité" ColumnName="quantité" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FOURNISSEURs">
+            <EntityTypeMapping TypeName="MonPCModel.FOURNISSEUR">
+              <MappingFragment StoreEntitySet="FOURNISSEUR">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="prenom" ColumnName="prenom" />
+                <ScalarProperty Name="mail" ColumnName="mail" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PRODUITs">
+            <EntityTypeMapping TypeName="MonPCModel.PRODUIT">
+              <MappingFragment StoreEntitySet="PRODUIT">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nomProduit" ColumnName="nomProduit" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="prix" ColumnName="prix" />
+                <ScalarProperty Name="quantité" ColumnName="quantité" />
+                <ScalarProperty Name="ajoute_par" ColumnName="ajoute_par" />
+                <ScalarProperty Name="appartient_a" ColumnName="appartient_a" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ADMINISTRATEURs">
+            <EntityTypeMapping TypeName="MonPCModel.ADMINISTRATEUR">
+              <MappingFragment StoreEntitySet="ADMINISTRATEUR">
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

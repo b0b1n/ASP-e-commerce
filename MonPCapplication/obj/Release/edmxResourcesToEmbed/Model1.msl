@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MonPCModelStoreContainer" CdmEntityContainer="MonPCEntities">
+    <EntitySetMapping Name="CATEGORIEs">
+      <EntityTypeMapping TypeName="MonPCModel.CATEGORIE">
+        <MappingFragment StoreEntitySet="CATEGORIE">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="nomCategorie" ColumnName="nomCategorie" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CLIENTs">
+      <EntityTypeMapping TypeName="MonPCModel.CLIENT">
+        <MappingFragment StoreEntitySet="CLIENT">
+          <ScalarProperty Name="idClient" ColumnName="idClient" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="nom" ColumnName="nom" />
+          <ScalarProperty Name="prenom" ColumnName="prenom" />
+          <ScalarProperty Name="mail" ColumnName="mail" />
+          <ScalarProperty Name="adresse" ColumnName="adresse" />
+          <ScalarProperty Name="telephone" ColumnName="telephone" />
+          <ScalarProperty Name="Budget" ColumnName="Budget" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CLIENT_PRODUIT">
+      <EntityTypeMapping TypeName="MonPCModel.CLIENT_PRODUIT">
+        <MappingFragment StoreEntitySet="CLIENT_PRODUIT">
+          <ScalarProperty Name="idCLIENT" ColumnName="idCLIENT" />
+          <ScalarProperty Name="idPRODUIT" ColumnName="idPRODUIT" />
+          <ScalarProperty Name="quantité" ColumnName="quantité" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FOURNISSEURs">
+      <EntityTypeMapping TypeName="MonPCModel.FOURNISSEUR">
+        <MappingFragment StoreEntitySet="FOURNISSEUR">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="nom" ColumnName="nom" />
+          <ScalarProperty Name="prenom" ColumnName="prenom" />
+          <ScalarProperty Name="mail" ColumnName="mail" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PRODUITs">
+      <EntityTypeMapping TypeName="MonPCModel.PRODUIT">
+        <MappingFragment StoreEntitySet="PRODUIT">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="nomProduit" ColumnName="nomProduit" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="image" ColumnName="image" />
+          <ScalarProperty Name="prix" ColumnName="prix" />
+          <ScalarProperty Name="quantité" ColumnName="quantité" />
+          <ScalarProperty Name="ajoute_par" ColumnName="ajoute_par" />
+          <ScalarProperty Name="appartient_a" ColumnName="appartient_a" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
